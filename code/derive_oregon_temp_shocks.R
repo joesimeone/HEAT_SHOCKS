@@ -243,7 +243,7 @@ spike_groups <- select(ore_zcta_prism, contains("_spike")) %>% names()
 spike_counts <- 
   map(spike_groups,
       ~ore_zcta_prism %>% 
-      group_by(year, !!sym(.x), .drop = FALSE) %>% 
+      group_by(year, GEOID10, !!sym(.x), .drop = FALSE) %>% 
       summarise(n = n(), .groups = "drop")
   )
 
