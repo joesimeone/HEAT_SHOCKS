@@ -145,14 +145,10 @@ ore_szn_30yr_avg <-
 
 
 
-## ----------------------------------------------------------------------------=
-# 2. 2018 - 2024 - Import & Easy Temp shock ----
-## ----------------------------------------------------------------------------=
-
 ## Because there are only six years of daily data requested, we're just going to
 ## pull into memory w/ arrow and go from there so we can use in-memory r tools
 
-## 2.1 Import w/ arrow | Add season, farenheit, date stuff
+## 1.4 Import w/ arrow | Add season, farenheit, date stuff
 ore_zcta_prism <-
   ore_prism_tbls_all %>%
   mutate(date_ymd = as.character(date_ymd),
@@ -174,9 +170,8 @@ ore_zcta_prism <-
   mutate(across(contains(measures), 
                 ~(. * 9/5) + 32, .names = "{.col}_fahrenheit")) %>% 
   collect()
-  
-  
-## 2.2 Derive Heat Indices from mean & max -------------------
+
+## 1.5 Derive Heat Indices from mean & max -------------------
 ore_zcta_prism <- 
   get_heat_indices(ore_zcta_prism,
                    "tmean_heat_index_f", 
@@ -200,7 +195,47 @@ ore_zcta_prism <-
   ore_zcta_prism %>% 
   filter(!is.na(tmean_heat_index_f))
 
-# 2.3 Derive Heat Shock ---------------------------------------------------------
+
+## 1.6 Derive annual seasonal averages ----
+
+ore_ann_szn <-
+  ore_zcta_prism %>% 
+  group_by(GEOID10, year, astro_season, .drop = FALSE) %>% 
+  summarise(across(contains(measures),
+                   list(
+                   mean = \(x) mean(x)
+                   ),
+                   .names = "{.fn}_{.col}"
+  ),
+  .groups = "drop")
+                   
+## 1.7 Join annual seasonal temps with long-term trend and subtract stuff
+ore_ann_szn_fin <-
+  ore_ann_szn %>% 
+  left_join(ore_szn_30yr_avg, by = c("GEOID10", "astro_season")) %>% 
+  mutate(tmax_anomaly = mean_tmax - tmax_30yr_avg,
+         tmax_f_anomaly = mean_tmax_fahrenheit - tmax_30yr_avg_fahrenheit,
+         tmax_hi_f_anomaly = mean_tmax_heat_index_f - tmax_30yr_heat_index_f,
+         tmean_anomaly = mean_tmean - tmean_30yr_avg,
+         tmean_f_anomaly = mean_tmean_fahrenheit - tmean_30yr_avg_fahrenheit,
+         tmean_hi_f_anomaly = mean_tmean_heat_index_f -  mean_tmean_heat_index_f,
+         tmin_anomaly = mean_tmin - tmin_30yr_avg,
+         tmin_f_anomaly = mean_tmin_fahrenheit -  tmin_30yr_avg_fahrenheit,
+         tdmean_anomaly =  mean_tdmean -  tdmean_30yr_avg,
+         tdmean_f_anomaly = mean_tdmean_fahrenheit - tdmean_30yr_avg_fahrenheit 
+         )
+
+
+
+
+
+## ----------------------------------------------------------------------------=
+# 2. 2018 - 2024 - Import & Easy Temp shock ----
+## ----------------------------------------------------------------------------=
+
+
+
+# 2.1 Derive Heat Shock ---------------------------------------------------------
 
 ## Lots of inputs we can use for calculation, and I'm not sure what makes the most sense
 ## so head bash 
