@@ -1,7 +1,11 @@
 # Overview
 
-Here, you'll find script use to derive a range of temperature shock definitions dervied from the [University of Oregon's 4 Kilometer (??) Prism Dataset available on Google Earth Engine](https://developers.google.com/earth-engine/datasets/catalog/OREGONSTATE_PRISM_AN81d#description) for Oregon
-2010 ZCTAs. Temperature shocks were coded for both extreme heat and extreme cold under the following definitions:
+Here, you'll find script use to derive a range of temperature shock definitions dervied from the [University of Oregon's 4 Kilometer (??) Prism Dataset available on Google Earth Engine](https://developers.google.com/earth-engine/datasets/catalog/OREGONSTATE_PRISM_AN81d#description) for the following States & Geographies:
+
+1. **California:** Counties (2010 vintage)
+2. **Oregon:** Counties and zcta (2010 vintage)
+
+Temperature shocks were coded for both extreme heat and extreme cold under the following definitions:
 
 ## 1. Days above and below temperature thesholds 
 
@@ -25,9 +29,11 @@ See **ADD LINK FOR DATA DICTIONARY FOR DETAILS**
 
 # Workflow 
 
-1. **get_oregon_zcta_files.R:** Pulls down 2010 Oregon ZCTA shapefiles uploaded to Google Earth Engine
-2. **get_prism_oregon_zcta10.js:** Loop to get daily calculate daily prism measures on Google Earth Engine
-3. **convert_ore_zip_to_parq.R:** Converts csvs pulled down from google earth engine to Parquet for more efficient storage and run times
+Workflows for both states can be found at code/**state_name**, and are organized as follows: 
+
+1. **get_**_**_files.R:** Download shapefile for relevant geography
+2. **get_prism_**_**.js:** Loop to get daily calculate daily prism measures on Google Earth Engine
+3. **convert_**_**_to_parq.R:** Converts csvs pulled down from google earth engine to Parquet for more efficient storage and run times
 4. **derive_oregon_temp_shocks.R:** Derive the metrics described above.
 
 Annotation within each script should hopefully fill in additional details. 
