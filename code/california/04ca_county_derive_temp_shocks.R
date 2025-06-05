@@ -328,3 +328,6 @@ ca_co_prism <-
          ppt_ranks = percent_rank(ppt),
          tmean_heat_index_f_ranks = percent_rank(tmean_heat_index_f),
          tmax_heat_index_f_ranks = percent_rank(tmax_heat_index_f))
+
+
+write_csv(ca_co_prism, "fin_data/ca_county10_heatshocks.csv")
