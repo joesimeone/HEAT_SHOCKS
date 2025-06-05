@@ -31,10 +31,10 @@ See **ADD LINK FOR DATA DICTIONARY FOR DETAILS**
 
 Workflows for both states can be found at code/**state_name**, and are organized as follows: 
 
-1. **get_**_**_files.R:** Download shapefile for relevant geography
-2. **get_prism_**_**.js:** Loop to get daily calculate daily prism measures on Google Earth Engine
-3. **convert_**_**_to_parq.R:** Converts csvs pulled down from google earth engine to Parquet for more efficient storage and run times
-4. **derive_oregon_temp_shocks.R:** Derive the metrics described above.
+1. **get_{geography}_files.R:** Download shapefile for relevant geography
+2. **get_prism_{geography}.js:** Loop to get daily calculate daily prism measures on Google Earth Engine
+3. **convert_{geography}_to_parq.R:** Converts csvs pulled down from google earth engine to Parquet for more efficient storage and run times
+4. **derive_{geography}_temp_shocks.R:** Derive the metrics described above.
 
 Annotation within each script should hopefully fill in additional details. 
 
