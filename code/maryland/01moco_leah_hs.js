@@ -2,6 +2,7 @@
 var montgomeryCounty = ee.FeatureCollection('TIGER/2018/Counties')
   .filter(ee.Filter.eq('NAME', 'Montgomery'))
   .filter(ee.Filter.eq('STATEFP', '24')); // Maryland's state FIPS code is 24
+  
 
 // Define the date range.
 var startYear = 2017;
@@ -32,6 +33,7 @@ var calculateDays = function(year) {
       }).get('tmax');
       
       // Create a feature with a binary exceedance value (1 if > threshold)
+      // Create a feature with a binary exceedance value (1 if > threshold)
       return ee.Feature(null, {
         'date': image.date().format('YYYY-MM-dd'),
         'exceedance': ee.Algorithms.If(ee.Number(zipTemp).gt(threshold), 1, 0)
@@ -40,8 +42,9 @@ var calculateDays = function(year) {
 
   // Aggregate the number of exceedance days in the year
   var totalDays = yearlyCollection.aggregate_sum('exceedance');
+  var geoid = montgomeryCounty.first().get('GEOID') 
   
-  return ee.Feature(null, { 'year': year, 'daysAbove80F': totalDays });
+  return ee.Feature(null, {'geoid': geoid, 'year': year, 'daysAbove80F': totalDays });
 };
 
 // Map the function over each year.
