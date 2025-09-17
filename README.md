@@ -13,19 +13,19 @@ For heat shocks, I counted days above 80, 90, and 95 degrees Farenheit respectiv
 
 For cold shocks, I counted days below 20, 32, and 40 degrees Farenheit respectively, using minimum and average dry bule temperatures. Calculations using heat index temperatures have been exlcuded for the moment while I work through some conceptual issues with [{weathermetrics}](https://github.com/geanders/weathermetrics). Each threshold - temperature combination represents a column in the resulting dataset.
 
-See **ADD LINK FOR DATA DICTIONARY FOR DETAILS**
+See [**Data Dictionary**](https://github.com/joesimeone/HEAT_SHOCKS/blob/main/heat_shocks_data_dictionary.xlsx)
 
 ## 2. Anomaly: Deviations from 30-year summer/winter average temperature
 
 Subtract the 2018 - 2024 season-specific average daily temperature for each year from the season-specific 30-year average (1991-2020).
 
-See **ADD SEASON TABLE DATA DICTONARY FOR DETAILS**
+See [**Data Dictionary**](https://github.com/joesimeone/HEAT_SHOCKS/blob/main/heat_shocks_data_dictionary.xlsx)
 
 ## 3. Heat shock: Days across temperature distribution categories
 
 For each fahrenheit prism measure (ppt, tmean, tdmean etc.), hit 2018 - 2024 daily temperature values with R {percent_rank} functions. Will use this to establish extreme cutpoints as needed. 
 
-See **ADD LINK FOR DATA DICTIONARY FOR DETAILS**
+See [**Data Dictionary**](https://github.com/joesimeone/HEAT_SHOCKS/blob/main/heat_shocks_data_dictionary.xlsx)
 
 # Workflow 
 
